@@ -75,7 +75,133 @@ FIFA vs GDP:
 The plot shows that no clear linear association exists. However there is some clustering that points to a potential relationship where countries with high GDP tend to cluster around lower FIFA ranking (better performance). This relationship we will explore more in our cluster map to analyze the significance of these clusters that appear in our scatter matrix.
 
 
+## Linear Regression Analysis
+Analysis Comparing Average FIFA and CPI
+The p-value from this receipt comparing average FIFA rankings and CPI scores is so small, 7.745325e-08, that it shows extreme significance of the relation between the two variables.
+renamed_avg = df_avg.rename(columns={'Average FIFA' : 'fifa', 'Average CPI' : 'cpi', 'Average PFI' : 'pfi', 'Average GDP' : 'gdp'})
+```
+#MODEL 1: fifa ~ cpi
+mod_1 = smf.ols('fifa ~ cpi', data=renamed_avg)
+res_1 = mod_1.fit()
+print(res_1.summary())
+print(res_1.pvalues)
+```
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   fifa   R-squared:                       0.243
+Model:                            OLS   Adj. R-squared:                  0.236
+Method:                 Least Squares   F-statistic:                     33.45
+Date:                Tue, 10 Jun 2025   Prob (F-statistic):           7.75e-08
+Time:                        04:02:01   Log-Likelihood:                -558.32
+No. Observations:                 106   AIC:                             1121.
+Df Residuals:                     104   BIC:                             1126.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    142.6419     11.286     12.639      0.000     120.262     165.022
+cpi           -1.4076      0.243     -5.784      0.000      -1.890      -0.925
+==============================================================================
+Omnibus:                        4.733   Durbin-Watson:                   1.862
+Prob(Omnibus):                  0.094   Jarque-Bera (JB):                4.576
+Skew:                           0.509   Prob(JB):                        0.101
+Kurtosis:                       2.965   Cond. No.                         114.
+==============================================================================
 
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Intercept    9.601188e-23
+cpi          7.745325e-08
+dtype: float64
 
-datasets offer powerful tools for analyzing long-term economic progress and cross-country differences in living standards.
+## Analysis Comparing Average FIFA and CPI Controlling for PFI
+When we made the same comparison controlling for PFI ranking, the p-vale became 0.099, making a statistically significant relationship between CPI and FIFA disappear. However, this can be justified since we know that PFI and CPI are multicollinear as seen in the scatter matrix and correlation heat map above.
+```
+#MODEL 2: fifa ~ cpi + pfi
+mod_2 = smf.ols('fifa ~ cpi + pfi', data=renamed_avg)
+res_2 = mod_2.fit()
+print(res_2.summary())
+```
+                           OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   fifa   R-squared:                       0.316
+Model:                            OLS   Adj. R-squared:                  0.302
+Method:                 Least Squares   F-statistic:                     23.74
+Date:                Tue, 10 Jun 2025   Prob (F-statistic):           3.31e-09
+Time:                        04:02:01   Log-Likelihood:                -553.00
+No. Observations:                 106   AIC:                             1112.
+Df Residuals:                     103   BIC:                             1120.
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     68.2788     25.008      2.730      0.007      18.680     117.877
+cpi           -0.5725      0.344     -1.665      0.099      -1.255       0.110
+pfi            0.4322      0.131      3.296      0.001       0.172       0.692
+==============================================================================
+Omnibus:                        2.354   Durbin-Watson:                   1.747
+Prob(Omnibus):                  0.308   Jarque-Bera (JB):                2.154
+Skew:                           0.349   Prob(JB):                        0.341
+Kurtosis:                       2.959   Cond. No.                         614.
+==============================================================================
 
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+## Analysis Comparing Average FIFA and CPI Controlling for GDP
+When controlling for GDP, we can see from GDP's p-value that it is not a predictor of a countries FIFA ranking. However, when looking at the CPI p-value controlled for GDP, its shows signifigance, supporting the sportwashing hypothesis. The economic state of a country does not affect a countries FIFA standing, however CPI does.
+```
+#MODEL 3: fifa ~ cpi + gdp
+mod_3 = smf.ols('fifa ~ cpi + gdp', data=renamed_avg)
+res_3 = mod_3.fit()
+print(res_3.summary())
+```
+
+                           OLS Regression Results                            
+==============================================================================
+Dep. Variable:                   fifa   R-squared:                       0.253
+Model:                            OLS   Adj. R-squared:                  0.238
+Method:                 Least Squares   F-statistic:                     17.42
+Date:                Tue, 10 Jun 2025   Prob (F-statistic):           3.03e-07
+Time:                        04:02:01   Log-Likelihood:                -557.65
+No. Observations:                 106   AIC:                             1121.
+Df Residuals:                     103   BIC:                             1129.
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    131.1936     15.095      8.691      0.000     101.256     161.132
+cpi           -0.9743      0.451     -2.160      0.033      -1.869      -0.080
+gdp           -0.5101      0.447     -1.140      0.257      -1.398       0.377
+==============================================================================
+Omnibus:                        3.408   Durbin-Watson:                   1.828
+Prob(Omnibus):                  0.182   Jarque-Bera (JB):                3.389
+Skew:                           0.399   Prob(JB):                        0.184
+Kurtosis:                       2.638   Cond. No.                         166.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+To further investigate model 3 and analyze the affect of GDP on CPI, we check the averages of the top 5 and bottom 5 countries in GDP rankings.
+```
+sorted_countries = gdp_avg.sort_values('Average GDP', ascending=False)
+
+#find average cpi of 25 countries with best gdp
+selected_countries = sorted_countries.head(25).index.tolist()
+sorted_gdp = df_avg[df_avg.index.isin(selected_countries)]
+avg_top_cpi = sorted_gdp['Average CPI'].mean()
+
+#find average cpi of 25 countries with worst gdp
+selected_countries = sorted_countries.tail(25).index.tolist()
+sorted_gdp = df_avg[df_avg.index.isin(selected_countries)]
+avg_bottom_cpi = sorted_gdp['Average CPI'].mean()
+
+print('Top 25 Countries in GDP Scores Average CPI: ' + str(avg_top_cpi))
+print('Bottom 25 Countries in GDP Scores Average CPI: ' + str(avg_bottom_cpi))
+```
+Top 25 Countries in GDP Scores Average CPI: 68.30666666666667
+Bottom 25 Countries in GDP Scores Average CPI: 30.04333333333333
+The purpose of this was to further analyze and check that GDP does not influence the FIFA ranking of a country. We wanted to confirm that GDP was not a confounding variable in the relationship of corruption and FIFA ranking. The linear regression analysis verifies that GDP is not a confounding variable. However analyzing the top and bottom 25 countries in GDP and calculating their average CPI scores, we can identify that gdp has some sort of role in the relationship but requires deeper analysis.
