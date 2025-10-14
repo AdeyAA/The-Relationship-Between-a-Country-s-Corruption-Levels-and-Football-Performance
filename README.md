@@ -10,25 +10,28 @@ To what extent does political corruption–defined as the abuse of power for pri
 ## Data overview
 We all got our datasets from the sites below and made csv files from them. We opened them in google sheets to make them into shareable webs for reading with pandas. After reading them into jupyter, we cleaned they data by removing any columns with unecessary information and reshaping the data to be in a more readable format. We also reindexed it so that the countries are on the left hand side and the years describe the columns.
 
-Press Freedom Index
+## Press Freedom Index
 Dataset Name: Press Freedom Index
 Link to the dataset: https://data360.worldbank.org/en/dataset/RWB_PFI
 Number of observations: 135
 Number of variables: 23
 Descripton: The Corruption Perceptions Index (CPI) dataset ranks countries based on perceived levels of public sector corruption, using a score from 0 to 100 where higher scores indicate cleaner governance. Each entry includes a country name, score, rank, and score change from the previous year, all of which serve as proxies for transparency and institutional integrity. A time series component tracks score changes from 2012 to 2023, enabling analysis of trends across different political and economic contexts. The data is derived from at least three expert and businessperson surveys out of thirteen trusted sources, such as the World Bank. Preprocessing steps include converting scores and ranks to numeric types, standardizing country names, handling missing values, and structuring the time series for longitudinal analysis.
-Corruption Perception Index
+
+## Corruption Perception Index
 Dataset Name: Corruption Perception Index
 Link to the dataset: https://www.transparency.org/en/cpi/2024/index/dnk
 Number of observations: 236
 Number of variables: 23
 Descripton: The Corruption Perceptions Index (CPI) dataset ranks countries based on perceived levels of public sector corruption, using a score from 0 to 100 where higher scores indicate cleaner governance. Each entry includes a country name, score, rank, and score change from the previous year, all of which serve as proxies for transparency and institutional integrity. A time series component tracks score changes from 2012 to 2023, enabling analysis of trends across different political and economic contexts. The data is derived from at least three expert and businessperson surveys out of thirteen trusted sources, such as the World Bank. Preprocessing steps include converting scores and ranks to numeric types, standardizing country names, handling missing values, and structuring the time series for longitudinal analysis.
-FIFA Men's Ranking
+
+## FIFA Men's Ranking
 Dataset Name: FIFA Men's Ranking
 Link to the dataset: https://www.kaggle.com/datasets/cashncarry/fifaworldranking/code
 Number of observations: 198
 Number of variables: 23
 Descripton: The FIFA World Rankings dataset includes both men's and women's national football teams, ranked based on their total points calculated from recent match results, tournament performance, and strength of opponents. Each entry contains key variables such as rank, team name, and total points, which serve as proxies for competitive strength and consistency. The men's rankings are updated as of April 3, 2025, and the women's as of March 6, 2025, offering a snapshot of current international standings. Cleaning the data requires dropping the statistics we are not analyzing and only including men's rankings, and reshaping the data to make it a cleaner table. This dataset can be valuable for performance modeling, regional comparisons, or assessing the impact of global tournaments on rankings. Cleaning the data requires dropping the statistics we are not analyzing and only including men's rankings.
-Gross Domestic Product (GDP) per capita
+
+## Gross Domestic Product (GDP) per capita
 Dataset Name: Per capita GDP at current prices - US dollars
 Link to the dataset: https://data.un.org/Data.aspx?d=SNAAMA&f=grID:101;currID:USD;pcFlag:1&c=2,3,5,6&s=_crEngNameOrderBy:asc,yr:desc&v=10
 Number of observations: 208
