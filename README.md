@@ -82,6 +82,7 @@ The plot shows that no clear linear association exists. However there is some cl
 Analysis Comparing Average FIFA and CPI
 The p-value from this receipt comparing average FIFA rankings and CPI scores is so small, 7.745325e-08, that it shows extreme significance of the relation between the two variables.
 renamed_avg = df_avg.rename(columns={'Average FIFA' : 'fifa', 'Average CPI' : 'cpi', 'Average PFI' : 'pfi', 'Average GDP' : 'gdp'})
+
 ```
 #MODEL 1: fifa ~ cpi
 mod_1 = smf.ols('fifa ~ cpi', data=renamed_avg)
@@ -89,28 +90,9 @@ res_1 = mod_1.fit()
 print(res_1.summary())
 print(res_1.pvalues)
 ```
-                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                   fifa   R-squared:                       0.243
-Model:                            OLS   Adj. R-squared:                  0.236
-Method:                 Least Squares   F-statistic:                     33.45
-Date:                Tue, 10 Jun 2025   Prob (F-statistic):           7.75e-08
-Time:                        04:02:01   Log-Likelihood:                -558.32
-No. Observations:                 106   AIC:                             1121.
-Df Residuals:                     104   BIC:                             1126.
-Df Model:                           1                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P>|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept    142.6419     11.286     12.639      0.000     120.262     165.022
-cpi           -1.4076      0.243     -5.784      0.000      -1.890      -0.925
-==============================================================================
-Omnibus:                        4.733   Durbin-Watson:                   1.862
-Prob(Omnibus):                  0.094   Jarque-Bera (JB):                4.576
-Skew:                           0.509   Prob(JB):                        0.101
-Kurtosis:                       2.965   Cond. No.                         114.
-==============================================================================
+
+<img width="470" height="365" alt="Screenshot 2025-10-14 at 10 23 06 AM" src="https://github.com/user-attachments/assets/05051ea5-7000-4ab7-bd1c-f100cfb94bdb" />
+
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
@@ -126,29 +108,7 @@ mod_2 = smf.ols('fifa ~ cpi + pfi', data=renamed_avg)
 res_2 = mod_2.fit()
 print(res_2.summary())
 ```
-                           OLS Regression Results                            
-==============================================================================
-Dep. Variable:                   fifa   R-squared:                       0.316
-Model:                            OLS   Adj. R-squared:                  0.302
-Method:                 Least Squares   F-statistic:                     23.74
-Date:                Tue, 10 Jun 2025   Prob (F-statistic):           3.31e-09
-Time:                        04:02:01   Log-Likelihood:                -553.00
-No. Observations:                 106   AIC:                             1112.
-Df Residuals:                     103   BIC:                             1120.
-Df Model:                           2                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P>|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept     68.2788     25.008      2.730      0.007      18.680     117.877
-cpi           -0.5725      0.344     -1.665      0.099      -1.255       0.110
-pfi            0.4322      0.131      3.296      0.001       0.172       0.692
-==============================================================================
-Omnibus:                        2.354   Durbin-Watson:                   1.747
-Prob(Omnibus):                  0.308   Jarque-Bera (JB):                2.154
-Skew:                           0.349   Prob(JB):                        0.341
-Kurtosis:                       2.959   Cond. No.                         614.
-==============================================================================
+<img width="464" height="375" alt="Screenshot 2025-10-14 at 10 23 16 AM" src="https://github.com/user-attachments/assets/b5a3cc3a-c2a2-49e3-8679-b502a08509f8" />
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
@@ -161,30 +121,8 @@ mod_3 = smf.ols('fifa ~ cpi + gdp', data=renamed_avg)
 res_3 = mod_3.fit()
 print(res_3.summary())
 ```
+<img width="477" height="392" alt="Screenshot 2025-10-14 at 10 23 36 AM" src="https://github.com/user-attachments/assets/71c92cc4-c8ca-47cc-9bc9-62abbf5466f4" />
 
-                           OLS Regression Results                            
-==============================================================================
-Dep. Variable:                   fifa   R-squared:                       0.253
-Model:                            OLS   Adj. R-squared:                  0.238
-Method:                 Least Squares   F-statistic:                     17.42
-Date:                Tue, 10 Jun 2025   Prob (F-statistic):           3.03e-07
-Time:                        04:02:01   Log-Likelihood:                -557.65
-No. Observations:                 106   AIC:                             1121.
-Df Residuals:                     103   BIC:                             1129.
-Df Model:                           2                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P>|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept    131.1936     15.095      8.691      0.000     101.256     161.132
-cpi           -0.9743      0.451     -2.160      0.033      -1.869      -0.080
-gdp           -0.5101      0.447     -1.140      0.257      -1.398       0.377
-==============================================================================
-Omnibus:                        3.408   Durbin-Watson:                   1.828
-Prob(Omnibus):                  0.182   Jarque-Bera (JB):                3.389
-Skew:                           0.399   Prob(JB):                        0.184
-Kurtosis:                       2.638   Cond. No.                         166.
-==============================================================================
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
